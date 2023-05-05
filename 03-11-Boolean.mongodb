@@ -1,0 +1,17 @@
+// insert data
+db.pets.insertMany([ 
+    { species: "cat", color: "brown"},
+    { species: "cat", color: "black"},
+    { species: "dog", color: "black"},
+    { species: "dog", color: "brown"},
+    ])
+
+// example 1
+db.pets.find({ $or : [ {species:"cat",color:"black"},
+                       {species:"dog",color:"brown"} ]})
+    
+{ "_id" : ObjectId("..."), "species" : "cat", "color" : "black" }
+{ "_id" : ObjectId("..."), "species" : "dog", "color" : "brown" }
+
+//Black pets that are not less than cats (alphabetically)
+db.pets.find({species: {$not: {$lte: "cat" }}, color: "black" })

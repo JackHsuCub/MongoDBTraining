@@ -1,0 +1,21 @@
+
+for(let x=0;x<200;x++) { db.taxis.insertOne({plate:x})}
+
+// example 1
+db.taxis.find({})
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce9116"), "plate" : 0 }
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce9117"), "plate" : 1 }
+...
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce9129"), "plate" : 19 }
+Type "it" for more
+
+// example 2, type it to fetch next items
+it
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce912a"), "plate" : 20 }
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce912b"), "plate" : 21 }
+...
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce913d"), "plate" : 39 }
+
+// example 3
+db.taxis.find({plate:5})
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce911b"), "plate" : 5 }

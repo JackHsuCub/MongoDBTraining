@@ -1,0 +1,23 @@
+use sample_airbnb
+
+db.listingsAndReviews.createIndex( 
+{ 
+"reviews.comments": "text", 
+"summary": "text", 
+"notes": "text" 
+} 
+  )
+
+// find the result
+db.listingsAndReviews.find({$text : { $search : "dogs" }})
+
+db.listingsAndReviews.find({$text:{ $search : "dogs -cats" }})
+
+db.listingsAndReviews.find({$text : { $search : " \"coffee shop\" " }})
+
+//Fails as cannot sort so much data in RAM
+
+db.listingsAndReviews.find(
+  	{ $text: { $search: "coffee shop cake" } },
+   	{ name: 1, score: { $meta: "textScore" } }
+  ).sort( { score: { $meta: "textScore" } } )

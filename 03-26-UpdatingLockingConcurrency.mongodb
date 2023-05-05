@@ -1,0 +1,28 @@
+// insert data
+db.lockdemo.insertOne({ _id: "Tom", votes: 0 } )
+{ "acknowledged" : true, "insertedId" : "Tom" }
+
+// update one
+db.lockdemo.updateOne({_id:"Tom",votes:0},
+{$inc:{votes:1}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+// find one
+db.lockdemo.findOne({_id:"Tom"})
+{ "_id" : "Tom", "votes" : 1 }
+
+// update same one
+db.lockdemo.updateOne({_id:"Tom",votes:0},
+{$inc:{votes:1}})
+{ "acknowledged" : true, "matchedCount" : 0, "modifiedCount" : 0 }
+
+// find the result
+db.lockdemo.findOne({_id:"Tom"})
+{ "_id" : "Tom", "votes" : 1 }
+
+//This is True even if updates come in parallel from different clients - all updates to a single document are serialized.
+/*MongoDB performs individual updates on records serially, one update does not see another partially completed.
+This means you can safely assume that the query conditions are true when making a change.
+This does not affect reads, you can always read a record they are not serialised like writes.
+Multiple writes can take place in parallel on a collection - this only affects individual documents.
+*/

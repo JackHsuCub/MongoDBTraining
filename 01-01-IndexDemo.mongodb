@@ -1,0 +1,48 @@
+use sample_airbnb
+// switched to db sample_airbnb
+
+// Find the result with explain()
+db.listingsAndReviews.find({number_of_reviews:50}).explain()
+
+{
+  queryPlanner: {
+    plannerVersion: 1,
+    namespace: 'sample_airbnb.listingsAndReviews',
+    indexFilterSet: false,
+    parsedQuery: { number_of_reviews: { '$eq': 50 } },
+    winningPlan: {
+      stage: 'COLLSCAN',
+      filter: { number_of_reviews: { '$eq': 50 } },
+      direction: 'forward'
+    },
+    rejectedPlans: []
+  },
+  ...
+  ok: 1,
+  ...
+  operationTime: Timestamp({ t: 1628755356, i: 1 })
+}
+
+// explian() with "executionStats"
+
+db.listingsAndReviews.find({number_of_reviews:50}).explain(
+"executionStats")
+
+// create index
+db.listingsAndReviews.createIndex({number_of_reviews:1})
+
+
+// check with explain() again
+db.listingsAndReviews.find({number_of_reviews:50}).explain(
+"executionStats")
+
+
+// get the indexes
+db.listingsAndReviews.getIndexes()
+
+
+// get the index size
+db.listingsAndReviews.stats().indexSizes
+
+
+

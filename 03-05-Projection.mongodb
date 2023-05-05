@@ -1,0 +1,23 @@
+db.customers.insertOne({ _id : "ann@gmail.com", name: "Ann", orders: [], spend: 0, lastpurchase: null })
+
+// findone 1
+db.customers.findOne({ name: "Ann" })
+{  "_id" : "ann@gmail.com",
+  "name" : "Ann",
+  "orders" : [], spend: 0, lastpurchase: null }
+
+// findone 2
+db.customers.findOne({ name:"Ann" }, {name: 1, spend: 1})
+{ "_id" : "ann@gmail.com", "name" : "Ann", "spend" : 0 }
+
+// findone 3
+db.customers.findOne({ name:"Ann" }, {name: 0, orders:0})
+{ "_id" : "ann@gmail.com", "spend" : 0, "lastpurchase" : null }
+
+// findone 4
+db.customers.findOne({ name:"Ann" },{name: 0, orders:1})
+MongoServerError: Cannot do inclusion on field orders in exclusion projection
+
+// findone 5
+db.customers.findOne({ name:"Ann" },{_id: 0, name:1})
+{ "name" : "Ann" }

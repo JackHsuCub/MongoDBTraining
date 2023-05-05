@@ -1,0 +1,19 @@
+// insert data
+db.fun.insertOne({ "name": "John", hobbies: ["cars","robots","gardens"]})
+{"acknowledged":true }
+
+//Find by ANY member of the array
+db.fun.find({hobbies:"gardens"})
+
+{"_id":ObjectId("5ca4bbcea2dd94ee58162a68"),"name":"John","hobbies":["cars","robots","gardens"]}
+
+//Find by matching the array itself
+db.fun.find({hobbies:["cars","robots","gardens"]})
+
+{"_id":ObjectId("5ca4bbcea2dd94ee58162a68"),"name":"John","hobbies":["cars","robots","gardens"]}
+
+//Not found - order doesn't match
+db.fun.find({hobbies:["robots","cars","gardens"]})
+
+//Not found - missing element
+db.fun.find({hobbies:["cars","robots"]})

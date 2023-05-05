@@ -1,0 +1,18 @@
+db.a.drop()
+
+db.a.insertOne({ name: "Tom", hrs: [ 0, 0, 1, 0, 0 ] } )
+
+//Find a week where tom has a day with no hours (query) 
+// for each day Tom has no hours and add 2 to those days
+// (arrayFilter) - assume there might be multiple records for Tom
+// so we cannot use JUST arrayfilters.
+
+db.a.updateOne({name:"Tom",hrs:{$lt:1}},
+                  {$inc : { "hrs.$[nohrs]" : 2 }},
+                  {"arrayFilters": [ {"nohrs":{"$lt":1}}]})
+
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+// find the result
+db.a.find({},{_id:0})
+{ "name" : "Tom", "hrs" : [ 2, 2, 1, 2, 2 ] }

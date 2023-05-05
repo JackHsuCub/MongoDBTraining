@@ -1,0 +1,20 @@
+// insert data
+db.sports.insertOne( {name: "fives",
+ players : ["Ravi", "Jon", "Niyati", "John" ]})
+{"acknowledged" : true,"insertedId" : ObjectId("")}
+
+// find
+db.sports.find({name:"fives"},{_id:0})
+{ "name" : "fives", "players" : [ "Ravi", "Jon", "Niyati", "John" ] }
+
+//Ravi is not added, as he is already there
+db.sports.updateOne({name:"fives"},{ $addToSet : { players: "Ravi"}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 0 }
+
+//Kim is added as they are not in the array currently
+db.sports.updateOne({name:"fives"},{ $addToSet : { players: "Kim"}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+// find the result
+db.sports.find({name:"fives"},{_id:0})
+{ "name" : "fives", "players" : [ "Ravi", "Jon", "Niyati", "John", "Kim" ] }

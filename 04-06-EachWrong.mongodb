@@ -1,0 +1,11 @@
+db.a.drop()
+//Set Toms hours for Monday to Wednesday
+db.a.insertOne({ "name" : "Tom", "hrs" : [ 4, 1, 3 ] })
+
+//Add hours for Thursday and Friday Incorrectly
+db.a.updateOne({name:"Tom"}, {$push:{hrs:[2,9]}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+// That's a wrong result
+db.a.find({},{_id:0})
+{ "name" : "Tom", "hrs" : [ 4, 1, 3, [ 2, 9 ] ] }

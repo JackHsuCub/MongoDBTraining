@@ -1,0 +1,25 @@
+db.playlists.drop()
+
+// insert data
+db.playlists.insertOne(
+{name: "funky",
+ tracks : [
+  { artist:"queen",track:"Liar"},
+  {artist:"abba",track:"Chiquitita"},
+  { artist:"queen",track:"Under Pressure"},
+  {artist:"AC/DC",track:"Hells Bells"},
+ ]})
+
+// update by pullAll, need to have a list of value
+ db.playlists.updateOne({name:"funky"},
+{ $pullAll : {"tracks" : [
+ {artist:"abba",track:"Chiquitita"},
+ {artist:"queen",track:"Under Pressure"}
+]
+}})
+
+// find the result
+db.playlists.find({},{_id:0}).pretty()
+{  "name" : "funky",
+   "tracks" : [{"artist" : "queen",	"track" : "Liar" },
+ {"artist" : "AC/DC",	"track" : "Hells Bells" }]}

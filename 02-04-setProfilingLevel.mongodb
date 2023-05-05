@@ -1,0 +1,12 @@
+db.setProfilingLevel(1,5)
+  {"was" : 0,"slowms" : 100,"sampleRate" : 1,"ok" : 1, ... }
+
+use sample_airbnb
+
+db.listingsAndReviews.find({amenities:"Snooker"})
+
+use admin
+
+var loglines = db.runCommand({getLog:"global"})
+
+printjson(loglines)

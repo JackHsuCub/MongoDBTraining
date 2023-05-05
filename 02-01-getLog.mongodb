@@ -1,0 +1,17 @@
+
+var loglines = db.adminCommand({getLog:"global"})
+
+// print the result
+printjson(loglines)
+
+{
+	totalLinesWritten : 2625918,
+	log : [ <LOG LINES HERE> ],
+	ok : 1,
+	$clusterTime : {
+		clusterTime : Timestamp(1594293362, 5),
+		signature : {
+		}
+	},
+	operationTime : Timestamp(1594293362, 5)
+}

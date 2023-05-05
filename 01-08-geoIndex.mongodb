@@ -1,0 +1,18 @@
+use sample_weatherdata
+
+db.data.createIndex({"position":"2dsphere"})
+
+joburg =  { 
+"type" : "Point",
+	"coordinates" : [ -26.2, 28.0 ]
+  }
+
+projection = {position:1,"airTemperature.value":1,_id:0}
+
+//Distance in metres
+db.data.find({ position: { $nearSphere: { $geometry: joburg,$maxDistance: 100000}}}, projection)
+
+{ "position" : { "type" : "Point", "coordinates" : [ -26.1, 28.5 ] }, "airTemperature" : { "value" : 20.5 } }
+{ "position" : { "type" : "Point", "coordinates" : [ -26.8, 27.9 ] }, "airTemperature" : { "value" : 19 } }
+{ "position" : { "type" : "Point", "coordinates" : [ -26.9, 27.6 ] }, "airTemperature" : { "value" : 20 } }
+{ "position" : { "type" : "Point", "coordinates" : [ -27, 27.5 ] }, "airTemperature" : { "value" : 20.3 } }

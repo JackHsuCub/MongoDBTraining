@@ -1,0 +1,53 @@
+#Get Bobs stock records
+db.stocks.aggregate([
+{$match: { customer: "bob"}},
+
+#For each on $lookup the current value of that stock
+
+{$lookup: {
+  from: "currentprices",
+  localfield: "symbol",
+  foreignField : "tkr",
+  as: "currentPrice" }},
+
+#For each record multiply how many bob has by the latest price
+
+{$set:
+   {holdings: { 
+      $multiply: ["$numheld",                 
+                 {$arrayElemAt:["$currentPrice", 0]
+}]}}
+
+#Add them up by stock
+{$group: {_id: "$symbol",
+          value: {$sum : "$holdings"})
+
+
+{ _id: "MSFT", value: 20124 }
+{ _id: "ORCL", value: 650 }
+{ _id: "MDB", value: 987521 }
+
+
+// $graphLookup
+
+db.landmarks.aggregate([
+{ $match: { _id: "Brooklyn Bridge" }},
+{ $graphLookup: {
+         from: "places",
+         startWith: "$location",
+         connectFromField: "isIn",
+         connectToField: "_id",
+         as: "address"
+      }}])
+
+
+
+Returns:
+
+{ _id: "Brooklyn Bridge",
+  location: "Brooklyn",
+  address : [ { _id: "Brooklyn", isIn: "NYC"},
+		 { _id: "NYC", isIn: "New York" },
+		 { _id: "New York", isIn: "USA" }]
+
+}

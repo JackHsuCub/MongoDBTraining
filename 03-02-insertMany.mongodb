@@ -1,0 +1,18 @@
+// 1000 Network Calls
+let st = ISODate()
+for(let d=0;d<1000;d++) {
+	db.orders.insertOne({ product: "socks", quantity: d})
+}
+print(`${ISODate()-st} milliseconds`)
+ 
+9106ms
+
+// 1 Network call, same data
+st = ISODate()
+let docs = []
+for(let d=0;d<1000;d++) {docs.push({ product: "socks", quantity: d})}
+
+db.orders.insertMany(docs)
+print(`${ISODate()-st} milliseconds`)
+
+51ms

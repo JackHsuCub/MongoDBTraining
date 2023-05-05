@@ -1,0 +1,22 @@
+// example 1
+db.people.insertOne( {"name": "John Doe",
+  "email": "john.doe@mongodb.com",
+  "address": {	"country": "USA",
+    "city": "New York",
+    "zipcode": "10005"}
+})
+
+//These find our document
+db.people.findOne({})
+
+db.people.findOne({"address.city" : "New York"})
+
+db.people.findOne({"name": "John Doe",
+"address.city" : "New York"})
+
+
+//Shell Error - Shell think address is a variable
+db.people.findOne({address.city : "New York"}) ✗
+
+// This will only work if there are no other fields in the address
+db.people.findOne({address : { city: "New York"}}) ✗

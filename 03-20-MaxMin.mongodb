@@ -1,0 +1,15 @@
+// insert data
+db.gamescores.insertOne({name: "pacman", highscore: 10000 })
+{ "acknowledged" : true,"insertedId" : ObjectId("")}
+
+//This finds the record but does not change it as 9000 < 10000
+db.gamescores.updateOne({name:"pacman"},{$max: { "highscore": 9000}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 0 }
+
+//This finds and changes highscore as 12000 > 10000
+db.gamescores.updateOne({name:"pacman"},{$max: { "highscore": 12000}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+// find the result
+db.gamescores.find({})
+{ "_id" : ObjectId("609bf0f8cf0c3aa225ce9314"), "name" : "pacman", "highscore" : 12000 }

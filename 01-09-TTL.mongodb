@@ -1,0 +1,13 @@
+db.t.drop()
+
+db.t.insertOne({ create_date : new Date(),
+user: "bobbyg",session_key: "a95364727282",
+cart : [{ sku: "borksocks", quant: 2}]})
+
+db.t.find()
+//TTL set to auto delete where create_date >  1 minute old.
+
+db.t.createIndex({"create_date": 1},{expireAfterSeconds: 60 })
+
+
+for(x=0;x<10;x++) { print(db.t.count()) ; sleep(10000) }

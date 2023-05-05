@@ -1,0 +1,18 @@
+use sample_airbnb
+
+db.setProfilingLevel(1,5)
+
+db.listingsAndReviews.find({amenities:"Snooker"})
+
+db.system.profile.findOne()
+  {
+	"op" : "query",
+	"ns" : "sample_airbnb.listingsAndReviews",
+	"keysExamined" : 0,
+	"docsExamined" : 5555,
+	"cursorExhausted" : true,
+
+	...
+
+
+db.setProfilingLevel(0,100)

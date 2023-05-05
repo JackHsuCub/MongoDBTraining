@@ -1,0 +1,15 @@
+use sample_airbnb //These numbers are obtained when the shell and server are in same region.
+
+function mkdata() { db.listingsAndReviews.aggregate([{$set:{x: {$range:[0, 10]}}}, {$unwind:"$x"},{$unset:"_id"},{$out:"big"}]).hasNext()}
+
+function testidx() { start=ISODate() ; db.big.find({"address.country":{$gte:"Canada"}},{name:1,_id:0}).batchSize(60000).toArray() ; print(ISODate() - start + "ms")}
+
+db.big.drop();mkdata();c=40;while(c--){testidx()} 
+// ~ 370-390  ms with no index, COLLSCAN of most of the DB
+
+db.big.drop();db.big.createIndex({"address.country":1}); mkdata();c=40;while(c--){testidx()}
+//~ 330-350 ms With an index on address.country
+
+db.big.drop() ;db.big.createIndex({"address.country":1, name:1}); mkdata(); c=40;while(c--){testidx()}
+//~ 290-320 ms with a covering index
+db.big.drop() // IMPORTANT TO CLEAR UP THE SPACE

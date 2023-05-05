@@ -1,0 +1,10 @@
+function recs_older_than(days) {
+  days_in_millis = days*24*60*60*1000
+  today= new Date()
+  n_days_ago =  new Date(today - days_in_millis)
+  return  { create_date: { "$lte" : n_days_ago}}
+}
+
+pipe = [{$match : recs_older_than(180)}]
+
+db.people.aggregate(pipe)

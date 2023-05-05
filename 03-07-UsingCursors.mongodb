@@ -1,0 +1,21 @@
+// example 1
+let mycursor = db.taxis.find({}) // No Output
+
+while (mycursor.hasNext()) {
+    let doc = mycursor.next();
+    printjson(doc) }
+
+// result
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce9117"), "plate" : 1 }
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce9118"), "plate" : 2 }
+... REMOVED for clarity …
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce91dd"), "plate" : 199 }
+
+// example 2
+let mycursor = db.taxis.find({}) // No Output
+
+mycursor.forEach( doc => { printjson(doc) })
+
+//This example does nothing - it does not even contact the server!
+for(let x=0;x<100;x++) {
+	let c = db.taxis.find({}) }

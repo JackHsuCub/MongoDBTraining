@@ -1,0 +1,24 @@
+
+use temp
+
+// query by successful client
+db.log.find(
+{ c:"ACCESS", msg:/^Successful/ },
+{ _id:0, "attr.client":1 }
+  ).pretty()
+
+  { attr : { client : "192.168.248.14:52798" } }
+  { attr : { client : "192.168.248.14:52808" } } 
+  { attr : { client : "192.168.248.14:52824" } }
+  { attr : { client : "192.168.248.14:52838" } }
+  { attr : { client : "192.168.248.14:52844" } }
+  { attr : { client : "192.168.248.14:52860" } }
+  { attr : { client : "192.168.248.14:52876" } }
+
+// query by category
+db.log.aggregate([{$sortByCount:"$c"}])
+  { _id : "NETWORK", count : 728 }
+  { _id : "ACCESS", count : 176 }
+  { _id : "SHARDING", count : 105 }
+  { _id : "CONNPOOL", count : 12 }
+  { _id : "QUERY", count : 1 }

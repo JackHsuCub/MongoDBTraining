@@ -1,0 +1,19 @@
+// insert data
+db.employees.insertOne({name: "Carol", salary: 10000, bonus: 500})
+{ "acknowledged" : true, "insertedId" : ObjectId("") }
+
+//Give everyone a 10% payrise
+db.employees.updateMany({},{$mul : {salary: 1.1}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+// find the result of update
+db.employees.find({},{_id:0})
+{ "name" : "Carol", "salary" : 11000, "bonus" : 500 }
+
+//Give Carol 1000 more bonus too
+db.employees.updateOne({name:"Carol"}, {$inc:{bonus:1000}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+// find the result after update
+db.employees.find({},{_id:0})
+{ "name" : "Carol", "salary" : 11000, "bonus" : 1500 }

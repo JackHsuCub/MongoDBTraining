@@ -1,0 +1,16 @@
+// Using find()
+
+db.listingsAndReviews.find(
+{"address.country":"Canada"},
+{"_id":0, "host.host_total_listings_count":1, "host.host_name":1}
+).sort({"host.host_total_listings_count":-1}).limit(1)
+
+
+// Using aggregate()
+
+db.listingsAndReviews.aggregate([ 
+  {$match:{"address.country":"Canada"}},
+  {$sort: {"host.host_total_listings_count":-1 }},
+  {$limit:1},
+  {$project:{"_id":0, "host.host_total_listings_count":1, "host.host_name":1}}
+])

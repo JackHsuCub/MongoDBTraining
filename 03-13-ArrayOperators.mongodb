@@ -1,0 +1,15 @@
+// insert data
+db.fun.insertOne({ "name": "John", hobbies: ["cars","robots","gardens"]})
+{"acknowledged":true }
+
+db.fun.find({ hobbies : { $all : ["robots","cars"] }})
+{ "_id" : ObjectId("609bc8a6cf0c3aa225ce91e6"), "name" : "John", "hobbies" : [ "cars", "robots", "gardens" ] }
+
+db.fun.find({ hobbies : { $all : ["robots","cars","bikes"] }})
+//No result as bikes is not in the array
+
+db.fun.find({ hobbies : { $size : 3}})
+{ "_id" : ObjectId("609bc8a6cf0c3aa225ce91e6"), "name" : "John", "hobbies" : [ "cars", "robots", "gardens" ] }
+
+db.fun.find({ hobbies : { $size : 4}})
+//No Result - array is 3 long

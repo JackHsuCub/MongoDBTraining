@@ -1,0 +1,22 @@
+// insert data
+let rnd = (x)=>Math.floor(Math.random()*x)
+for(let x=0;x<100;x++) { db.scores.insertOne({ride:rnd(40),swim:rnd(40),run:rnd(40)})}
+
+//Unsorted
+db.scores.find({},{_id:0})
+{ "ride" : 5, "swim" : 11, "run" : 11 }
+{ "ride" : 0, "swim" : 17, "run" : 12 }
+{ "ride" : 17, "swim" : 2, "run" : 2 }
+
+//Sorted by ride increasing
+db.scores.find({},{_id:0}).sort({ride:1})
+{ "ride" : 0, "swim" : 38, "run" : 10 }
+{ "ride" : 1, "swim" : 37, "run" : 37 }
+{ "ride" : 1, "swim" : 30, "run" : 20 }
+
+//Sorted by swim increasing then ride decreasing
+db.scores.find({},{_id:0}).sort({swim:1, ride:-1})
+{ "ride" : 31, "swim" : 0, "run" : 14 }
+{ "ride" : 11, "swim" : 0, "run" : 14 }
+{ "ride" : 30, "swim" : 1, "run" : 34 }
+{ "ride" : 21, "swim" : 1, "run" : 3 }

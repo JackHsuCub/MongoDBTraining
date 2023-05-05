@@ -1,0 +1,20 @@
+// find and update at the same time
+db.s.findOneAndUpdate({_id:"a"}, {$inc:{c:1}}) //Thread 1
+{_id:"a", c:1 }
+
+db.s.findOneAndUpdate({_id:"a"}, {$inc:{c:1}}) //Thread 2
+{_id:"a", c:2 }
+
+/*
+findOneAndUpdate() solves issues from previous slide
+
+With findOneAndUpdate the single, atomic command finds, modifies and returns the document.
+
+By default it will return the document BEFORE the update. 
+Use the {returnNewDocument: true} parameter to return the document AFTER the update.
+
+You can apply things like sorting and projection to control what it finds and modifies.
+
+It only affects one document and also will work with upsert.
+
+*/

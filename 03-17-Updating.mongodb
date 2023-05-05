@@ -1,0 +1,25 @@
+db.players.drop() // Remove any existing
+
+// insert data
+db.players.insertMany([
+ { _id: "mary", points: 150, wins: 25, highscore: 60 },
+ { _id: "tom", points: 95, wins: 18, highscore: 110 }])
+
+ { "acknowledged" : true, "insertedIds" : [ "mary", "tom" ] }
+// update one
+db.players.updateOne({_id:"mary"},{$set : { points :160, wins: 26}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+// find one
+db.players.find({_id:"mary"})
+{ "_id" : "mary", "points" : 160, "wins" : 26, "highscore" : 60 }
+
+// update many
+db.players.updateMany({points : {$lt:200}},
+                                {$set:{level:"beginner"}})
+{ "acknowledged" : true, "matchedCount" : 2, "modifiedCount" : 2 }
+
+// find all
+db.players.find()
+{ "_id" : "mary", "points" : 160, "wins" : 26, "highscore" : 60, "level" : "beginner" }
+{ "_id" : "tom", "points" : 95, "wins" : 18, "highscore" : 110, "level" : "beginner" }

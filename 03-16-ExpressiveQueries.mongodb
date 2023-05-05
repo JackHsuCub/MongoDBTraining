@@ -1,0 +1,17 @@
+use sample_mflix
+// switched to db sample_mflix
+
+//Movies where rotten tomatoes rates it higher than imdb
+db.movies.find({ 
+   $expr: { $gt: [ "$tomatoes.viewer.rating" ,"$imdb.rating" ] } 
+})
+
+use sample_training
+//switched to db sample_training
+//Grades where average score < 50
+db.grades.find({ 
+    $expr: { $lt: [ 
+        { $avg: "$scores.score" },
+        50
+    ]}
+})

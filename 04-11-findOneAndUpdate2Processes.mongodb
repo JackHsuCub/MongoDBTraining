@@ -1,0 +1,21 @@
+// if the case is to get the sequence number
+db.s.insertOne({_id:"a",c:0})
+
+db.s.findOne({_id:"a"},{c:1})
+{_id:"a", c:0 }
+
+db.s.updateOne({_id:"a"},{$inc:{c:1}}) // Thread 1
+
+db.s.updateOne({_id:"a"},{$inc:{c:1}}) // Thread 2
+
+db.s.findOne({_id:"a"},{c:1})  //Thread 1
+{_id:"a", c:2 } // NOT c = 1 as before
+
+db.s.findOne({_id:"a"},{c:1}) //Thread 2
+{_id:"a", c:2 }
+
+/*
+If we extend this to multiple threads then we can have a race condition where we update twice then fetch twice.
+It would be fine if we don’t provide the projection in findOne() commands as there is only one field other than 
+the _id. It would give us the same result.
+*/

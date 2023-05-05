@@ -1,0 +1,25 @@
+// declar data set
+let friends = [ {_id: "joe"}, {_id: "bob"}, 
+{_id: "joe" }, {_id: "jen" } ]
+
+// insert data
+db.collection1.insertMany(friends)
+
+{	"errmsg" : "E11000 duplicate key error collection: test.example index: _id_ dup key: { _id: \"joe\" }",
+"nInserted" : 2}
+
+// insert data 
+db.collection2.insertMany(friends,{ordered:false})
+
+{	"errmsg" : "E11000 duplicate key error collection: test.example index: _id_ dup key: { _id: \"joe\" }",
+"nInserted" : 3}
+
+// find the data
+db.collection1.find()
+{ "_id" : "joe" }
+{ "_id" : "bob" }
+
+db.collection2.find()
+{ "_id" : "joe" }
+{ "_id" : "bob" }
+{ "_id" : "jen" }

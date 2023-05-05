@@ -1,0 +1,17 @@
+// insertOne example
+
+// first example
+db.customers.insertOne({ _id : "bob@gmail.com", name: "Robert Smith", orders: [], spend: 0, lastpurchase: null })
+
+{ "acknowledged": true, "insertedId" : "bob@gmail.com" }
+
+// second example
+db.customers.insertOne({ _id : "bob@gmail.com", name: "Bobby Smith", orders: [], spend: 0, lastpurchase: null })
+
+MongoServerError: E11000 duplicate key error collection: sample_training.customers index:_id_ dup key:{_id:"bob@gmail.com"}
+
+// third example
+db.customers.insertOne({name: "Andi Smith", orders: [], spend: 0, lastpurchase: null })
+
+{"acknowledged": true, 
+"insertedId": ObjectId("609ab0c1aeb5ca24f9daa254") }

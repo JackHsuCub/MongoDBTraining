@@ -1,0 +1,24 @@
+for(let x=0;x<200;x++) { db.taxis.insertOne({plate:x})}
+
+// example 1 limit
+db.taxis.find({}).limit(5)
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce9116"), "plate" : 0 }
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce9117"), "plate" : 1 }
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce9118"), "plate" : 2 }
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce9119"), "plate" : 3 }
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce911a"), "plate" : 4 }
+
+// example 2 skip
+db.taxis.find({}).skip(2)
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce9118"), "plate" : 2 }
+... REMOVED for clarity ...
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce912b"), "plate" : 21 }
+Type "it" for more
+
+// example 3 skip and limit
+db.taxis.find({}).skip(8).limit(2)
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce911e"), "plate" : 8 }
+{ "_id" : ObjectId("609b9aaccf0c3aa225ce911f"), "plate" : 9 }
+
+// example count
+db.taxis.find({}).count()

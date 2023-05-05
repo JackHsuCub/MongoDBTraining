@@ -1,0 +1,20 @@
+db.players.drop()
+
+db.players.updateOne({name:"joe"},{$inc:{games:1}})
+{ "acknowledged" : true, "matchedCount" : 0, "modifiedCount" : 0 }
+//Nothing found to update - we have no player "joe"
+
+db.players.updateOne({name:"joe"},{$inc:{games:1}},{upsert:true})
+{ "acknowledged" : true,"matchedCount" : 0,
+ "modifiedCount" : 0, "upsertedId"ObjectId("6093b3a9c07da") }
+
+db.players.find()
+{ "_id" : ObjectId("6093b419c07da"), "name" : "joe", "games" : 1 }
+//Document created because of upsert
+
+db.players.updateOne({name:"joe"},{$inc:{games:1}},{upsert:true})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+db.players.find()
+{ "_id" : ObjectId("6093b419c07da"), "name" : "joe", "games" : 2 }
+//Document modified as exists already upsert does nothing here.

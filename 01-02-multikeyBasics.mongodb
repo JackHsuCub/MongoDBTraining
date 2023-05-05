@@ -1,0 +1,18 @@
+use test
+
+db.race_results.drop()
+
+db.race_results.createIndex( { "lap_times" : 1 } ) 
+
+//insert data
+db.race_results.insertMany([ 
+{ "lap_times" : [ 3, 5, 2, 8 ] }, 
+{ "lap_times" : [ 1, 6, 4, 2 ] }, 
+{ "lap_times" : [ 6, 3, 3, 8 ] } 
+])
+
+// Answer Questions before running these two!
+
+db.race_results.find( { lap_times : 1 } )
+
+db.race_results.find( { "lap_times.2" : 3 } )

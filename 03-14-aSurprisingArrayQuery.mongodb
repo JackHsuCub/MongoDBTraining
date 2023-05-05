@@ -1,0 +1,18 @@
+// insert the test data
+ ds1 = { age: [40, 10, 5]}
+
+db.test3.insertOne(ds1)
+{
+  acknowledged: true,
+  insertedId: ObjectId("63dfb2ae268059fa9f08d254")
+}
+
+// the age should be between 19 and 29
+// We didn't find the value but get the wrong result
+db.test3.find({age:{$gt:18, $lt:30}})
+
+[ { _id: ObjectId("63dfb2ae268059fa9f08d254"), age: [ 40, 10, 5 ] } ]
+
+// Using $elemMatch to query the right data
+db.test3.find({ age : {$elemMatch: { $gt : 18 , $lt: 30 } }})
+

@@ -1,0 +1,27 @@
+// insert data
+db.bands.insertOne({ _id: "genesis", Singer: "Peter", Drums: "Phil",Keyboard:"Tony",Guitar:"Mike"})
+{ "acknowledged" : true, "insertedId" : "genesis" }
+
+// find one
+db.bands.findOne()
+{
+        "_id" : "genesis",
+        "Singer" : "Peter",
+        "Drums" : "Phil",
+        "Keyboard" : "Tony",
+        "Guitar" : "Mike"
+}
+
+// update one
+db.bands.updateOne({ _id :"genesis" }, 
+{ $unset: {"Singer":true}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+// find one again
+db.bands.findOne()
+{
+        "_id" : "genesis",
+        "Drums" : "Phil",
+        "Keyboard" : "Tony",
+        "Guitar" : "Mike"
+}

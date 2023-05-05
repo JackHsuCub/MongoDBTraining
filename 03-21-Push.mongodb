@@ -1,0 +1,26 @@
+// insert data
+db.playlists.insertOne(
+    {name: "funky",
+     tracks : [
+      { artist:"queen",track:"Liar"},
+      {artist:"abba",track:"Chiquitita"},
+     ]})
+    
+    { "acknowledged" : true,"insertedId" : ObjectId("")}
+    
+// Update one
+db.playlists.updateOne({name:"funky"},
+    { $push : {tracks : { artist: "AC/DC", track: "Hells Bells"} }})
+    
+    { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+    
+// find the result
+db.playlists.find({}).pretty()
+    {  "_id" : ObjectId(""),
+       "name" : "funky",
+       "tracks" : [
+         {"artist" : "queen",	"track" : "Liar" },
+        {"artist" : "abba",	"track" : "Chiquitita" },
+        {"artist" : "AC/DC",	"track" : "Hells Bells" } ]
+    }
+    

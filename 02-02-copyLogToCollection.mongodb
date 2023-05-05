@@ -1,0 +1,24 @@
+use temp
+var x = db.adminCommand( { getLog: "global" } )
+db.log.drop()
+db.log.insertMany(x.log.map(JSON.parse))
+
+db.log.find({}).pretty()
+
+  {
+	_id : ObjectId("5fcf704fda3f8a47fffdc6e5"),
+	t : {
+		$date : "2020-12-08T11:52:56.311+00:00"
+	},
+	s : "I",
+	c : "NETWORK",
+	id : 22944,
+	ctx : "conn329",
+	msg : "Connection ended",
+	attr : {
+		remote : "192.168.254.30:55800",
+		connectionId : 329,
+		connectionCount : 36
+	}
+  }
+

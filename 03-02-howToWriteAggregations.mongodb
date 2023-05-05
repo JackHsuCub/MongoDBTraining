@@ -1,0 +1,13 @@
+//Do it THIS way for ease of testing and debugging
+
+no_celebs = {$match:{"user.followers_count":{$lt:200000}}}
+
+name_only = {$project:{"user.name":1, "user.followers_count":1,_id:0}}
+
+most_popular = {$sort: {"user.followers_count":-1}}
+
+first_in_list = {$limit:1}
+
+pipeline = [no_celebs,name_only,most_popular,first_in_list]
+
+db.twitter.aggregate(pipeline)

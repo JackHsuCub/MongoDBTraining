@@ -1,0 +1,14 @@
+db.s.insertOne({_id:"a", c:0})
+
+db.s.findOne({_id:"a"},{c:1})
+{_id:"a", c:0 }
+
+db.s.updateOne({_id:"a"},{$inc:{c:1}}) 
+
+db.s.findOne({_id:"a"},{c:1}) 
+{_id:"a", c:1 }
+
+db.s.updateOne({_id:"a"},{$inc:{c:1}})
+
+db.s.findOne({_id:"a"},{c:1})
+{_id:"a", c:2 }

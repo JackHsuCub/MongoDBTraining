@@ -1,0 +1,29 @@
+// pop will remove the element from an Array
+// insert data
+db.playlists.find({},{_id:0}).pretty()
+{  "name" : "funky",
+   "tracks" : [ {"artist" : "queen", "track" : "Liar" },
+	         {"artist" : "abba",	"track" : "Chiquitita" },
+	         {"artist" : "AC/DC", "track" : "Hells Bells" }]
+}
+
+// update by pop
+db.playlists.updateOne({name:"funky"},
+{ $pop: {tracks: 1}})
+
+// find the result
+db.playlists.find({},{_id:0}).pretty()
+{  "name" : "funky",
+   "tracks" : [{"artist" : "queen",	"track" : "Liar" },
+	        {"artist" : "abba",	"track" : "Chiquitita" }]
+}
+
+// update one by pop again
+db.playlists.updateOne({name: "funky"},
+{ $pop: {tracks: -1}})
+
+// find the result
+db.playlists.find({},{_id:0}).pretty()
+{   "name" : "funky",
+   "tracks" : [{"artist" : "abba",	"track" : "Chiquitita" }]
+}

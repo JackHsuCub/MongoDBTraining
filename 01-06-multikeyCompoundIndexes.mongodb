@@ -1,0 +1,24 @@
+use test
+//switched to db test
+
+db.multikey.createIndex({ a:1, b:1, c:1})
+
+a_1_b_1_c_1
+
+// insert data
+db.multikey.insertOne({a:"temps",b:[1,2,3],c:4})
+{
+  acknowledged: true,
+  insertedId: ObjectId("6114e952c8e5b75daaa54d33")
+}
+
+// insert another data
+db.multikey.insertOne({a:"temps",b:2,c:[8,9,10]})
+{
+  acknowledged: true,
+  insertedId: ObjectId("6114e95ac8e5b75daaa54d34")
+}
+
+// insert another data
+db.multikey.insertOne({a:"temps",b:[2,3],c:[8,9,10]})
+MongoServerError: cannot index parallel arrays [c] [b]

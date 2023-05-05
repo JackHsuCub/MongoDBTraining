@@ -1,0 +1,22 @@
+db.blog.drop()
+
+db.blog.insertMany([
+{"comments": [{ "name" : "Bob", "rating" : 1 }, 
+                  { "name" : "Frank", "rating" : 5.3 }, 
+                  { "name" : "Susan", "rating" : 3 } ]},
+
+{"comments": [{ name : "Megan", "rating" : 1 } ] },
+
+{"comments": [{ "name" : "Luke", "rating" : 1.4 },
+                 { "name" : "Matt", "rating" : 5 }, 
+                 { "name" : "Sue", "rating" : 7 } ] }
+])
+
+db.blog.createIndex( { "comments" : 1 } )
+db.blog.createIndex( { "comments.rating" : 1 } )
+
+// Answer Questions before running the below queries
+
+db.blog.find( { "comments" : { "name" :"Bob", "rating": 1 }}) 
+db.blog.find( { "comments" : { "rating" : 1 } } ) 
+db.blog.find( { "comments.rating" : 1 } )

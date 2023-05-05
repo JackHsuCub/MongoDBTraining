@@ -1,0 +1,123 @@
+// define data as variable msgs
+msgs = [ 
+{ "timestamp": 1, "username": "anonymous", "rating": 3}, 
+{ "timestamp": 2, "username": "anonymous", "rating": 5}, 
+{ "timestamp": 3, "username": "sam", "rating": 2 }, 
+{ "timestamp": 4, "username": "anonymous", "rating": 2}, 
+{ "timestamp": 5, "username": "martha", "rating" : 5 } 
+  ] 
+
+// drop existing collection
+db.messages.drop()
+
+// insert data to messageBoard
+db.messages.insertMany(msgs)
+
+
+//Index on timestamp
+db.messages.createIndex({ timestamp : 1 })
+
+// explain()
+db.messages.find( 
+{ timestamp : { $gte : 2, $lte : 4 } }   
+  ).explain("executionStats")
+
+// add anonymouse user
+db.messages.find(
+{ timestamp: { $gte : 2, $lte : 4 }, username: "anonymous" }
+  ).explain("executionStats")
+
+/*...
+	nReturned: 2,
+    	executionTimeMillis: 0,
+   	totalKeysExamined: 3,
+    	totalDocsExamined: 3,
+        */
+
+// create wrong index
+db.messages.dropIndex("timestamp_1")
+
+db.messages.createIndex( { timestamp: 1, username: 1 })
+
+db.messages.find( 
+{ timestamp: { $gte : 2, $lte : 4 }, username: "anonymous" } 
+  ).explain("executionStats")
+
+/*...
+	nReturned: 2,
+    	executionTimeMillis: 0,
+    	totalKeysExamined: 4,
+    	totalDocsExamined: 2,
+*/
+
+// create correct index
+db.messages.dropIndex("timestamp_1_username_1")
+
+db.messages.createIndex( { username: 1, timestamp: 1 })
+
+db.messages.find( 
+{ timestamp: { $gte : 2, $lte : 4 }, username: "anonymous" } 
+  ).explain("executionStats")
+
+/*
+    nReturned: 2,
+    executionTimeMillis: 1,
+    totalKeysExamined: 2,
+    totalDocsExamined: 2,
+*/
+
+// with sort
+db.messages.find( 
+{ timestamp: {$gte:2, $lte:4}, username:"anonymous"}
+  ).sort({rating:1}).explain("executionStats")
+  
+  /*...
+
+	executionStats: {
+    		executionSuccess: true,
+    		nReturned: 2,
+    		executionTimeMillis: 0,
+    		totalKeysExamined: 4,
+    		totalDocsExamined: 2,
+    		executionStages: {
+      			stage: 'SORT',
+  
+  ...*/
+
+// create correct index with sort
+db.messages.dropIndex("username_1_timestamp_1")
+
+db.messages.createIndex( { username: 1, timestamp: 1, rating:1 })
+
+db.messages.find( 
+{ timestamp: {$gte:2, $lte:4}, username:"anonymous"}
+  ).sort({rating:1}).explain("executionStats")
+
+/*
+    nReturned: 2,
+    executionTimeMillis: 1,
+    totalKeysExamined: 2,
+    totalDocsExamined: 2,
+*/
+
+
+// create better index with sort
+db.messages.dropIndex("username_1_timestamp_1_rating_1")
+
+db.messages.createIndex( { username: 1, rating: 1, timestamp:1 })
+
+db.messages.find( 
+{ timestamp: {$gte:2, $lte:4}, username:"anonymous"}
+  ).sort({rating:1}).explain("executionStats")
+
+/*
+    executionSuccess: true,
+    nReturned: 2,
+    executionTimeMillis: 1,
+    totalKeysExamined: 4,
+    totalDocsExamined: 2,
+*/
+
+
+
+

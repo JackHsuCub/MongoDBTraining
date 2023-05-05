@@ -1,0 +1,17 @@
+
+db.a.drop() 
+
+// insert data
+db.a.insertOne({ name: "Tom", hrs: [ 0, 0, 1, 0, 0 ] } )
+
+// find one
+db.a.find({},{_id:0})
+{ "name" : "Tom", "hrs" : [ 0, 0, 1, 0, 0 ] }
+
+//Add an extra hour to Tom on Thursday
+db.a.updateOne({name: "Tom"},{ $inc : { "hrs.3" : 1 }})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+// find the result
+db.a.find({},{_id:0})
+{ "name" : "Tom", "hrs" : [ 0, 0, 1, 1, 0 ] }

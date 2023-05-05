@@ -1,0 +1,26 @@
+
+use('demo')
+
+db.customers.drop()
+
+// example 1
+db.customers.insertOne({ _id : "tim@gmail.com", name: "Timothy", orders: [], spend: 0, lastpurchase: null })
+
+{ "acknowledged": true, "insertedId" : "tim@gmail.com" }
+
+//example 2
+db.customers.findOne({ _id : "tim@gmail.com" })
+
+{	"_id" : "tim@gmail.com",
+	"name" : "Timothy",
+	"orders" : [ ],
+	"spend" : 0,
+	"lastpurchase" : null 
+}
+
+// finding example
+db.customers.findOne({ spend: 0 })
+db.customers.findOne({ spend: 0 , name: "Timothy" })
+bb.customers.findOne({ name: "timothy" }) // No match
+db.customers.findOne({ spend: "0" }) // No Match
+db.customers.findOne({}) // Match everything
